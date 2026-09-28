@@ -1,0 +1,18 @@
+# Build output
+build/
+*.o
+*.a
+*.so
+
+# Executables
+*.out
+*.exe
+
+# Debugging
+*.log
+core
+
+# Editor / OS
+.vscode/
+.idea/
+.DS_Store
