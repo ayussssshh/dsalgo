@@ -25,10 +25,20 @@ This allows the same structure to store different C types such as:
 
 The current implementation supports:
 
+
+### Creating an S_array
+
 * Creating an `S_array`
 * Allocating memory for its elements
 * Storing the element size
 * Storing the array length
+
+
+### Destroying an S_array
+
+* Destroy an `S_array`
+* free the memory for the S_array struct
+* free the memory for the data pointer
 
 The following operations have **not yet been implemented**:
 
@@ -37,7 +47,6 @@ The following operations have **not yet been implemented**:
 * Element copying
 * Element swapping
 * Array copying
-* Array destruction through a dedicated API
 * Other array operations
 
 ## Memory Representation

@@ -123,3 +123,120 @@ n × element_size
 ```
 
 bytes of storage.
+
+
+---
+
+# `Sarray_destroy`
+
+## Declaration
+
+```c
+void Sarray_destroy(S_array *array);
+````
+
+## Purpose
+
+Destroys an `S_array` and releases all dynamically allocated memory owned by it.
+
+The function frees:
+
+1. The memory allocated for the array elements.
+2. The memory allocated for the `S_array` structure itself.
+
+After calling this function, the `S_array` pointer must not be used.
+
+## Parameters
+
+### `array`
+
+A pointer to the `S_array` to be destroyed.
+
+The `S_array` must have been created using `Sarray_create()` and must not have already been destroyed.
+
+## Return Value
+
+This function does not return a value.
+
+```c
+void
+```
+
+## Memory Ownership
+
+`Sarray_destroy()` releases both allocations owned by the `S_array`:
+
+```text
+S_array
+   │
+   ├──► S_array structure
+   │
+   └──► data ───────► element storage
+```
+
+The function first frees the memory referenced by `array->data` and then frees the `S_array` structure itself.
+
+After the function returns, the pointer passed to `Sarray_destroy()` becomes invalid and must not be dereferenced.
+
+## Example
+
+```c
+S_array *arr = Sarray_create(sizeof(int), 10);
+
+/* use arr */
+
+Sarray_destroy(arr);
+```
+
+Before destruction:
+
+```text
+arr
+ │
+ ▼
+┌──────────────────────┐
+│ S_array              │
+│                      │
+│ data ────────────────┼──────► element storage
+│ element_size = 4     │
+│ length = 10          │
+└──────────────────────┘
+```
+
+After:
+
+```c
+Sarray_destroy(arr);
+```
+
+Both the `S_array` structure and its element storage have been released.
+
+## Current Implementation
+
+```c
+void Sarray_destroy(S_array *array)
+{
+    free(array->data);
+    free(array);
+}
+```
+
+## Complexity
+
+### Time
+
+**O(1)** with respect to the number of elements.
+
+The function performs a constant number of operations regardless of the array length.
+
+The underlying `free()` operations may have implementation-dependent costs.
+
+### Space
+
+**O(1)** additional space.
+
+The function does not allocate any additional memory while destroying the array.
+
+
+
+
